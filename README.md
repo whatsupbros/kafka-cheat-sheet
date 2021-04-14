@@ -457,7 +457,7 @@ curl -Ss -X PUT -H "Content-Type:application/json" http://localhost:8083/admin/l
 curl -Ss -X GET http://localhost:8081/subjects | jq
 ```
 
-### Retrieve schema versions for a subject
+### Retrieve schema versions of a subject
 
 ```
 curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions | jq
