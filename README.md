@@ -217,7 +217,6 @@ export SCHEMA_REGISTRY_OPTS="-Djavax.net.ssl.keyStore=$KAFKA_KEYSTORE_LOCATION -
 --property schema.registry.url=http://localhost:8081 \
 --property schema.registry.basic.auth.user.info="$API_KEY:$API_SECRET" \
 --property basic.auth.credentials.source=USER_INFO \
---property basic.auth.credentials.source=USER_INFO \
 --consumer-property security.protocol=SASL_SSL \
 --consumer-property sasl.mechanism=PLAIN \
 --consumer-property sasl.jaas.config="org.apache.kafka.common.security.plain.PlainLoginModule required username=\"$API_KEY\" password=\"$API_SECRET\";" \
