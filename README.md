@@ -1,10 +1,22 @@
 # Kafka Cheat Sheet
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?&style=for-the-badge)](https://opensource.org/licenses/Apache-2.0) [<img alt="LinkedIn" src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/>](https://www.linkedin.com/in/denissavenko/) [<img alt="Blog" src="https://img.shields.io/badge/blog-black.svg?&style=for-the-badge&logo=ghost&logoColor=white"/>](https://dsavenko.me/)
+
 This is a list of commonly used CLI examples, when you work with **Kafka**, **Kafka Connect** and **Schema Registry**.
 Feel free to use it as well as post extensions to it.
 
 All commands should be executed from **Apache Kafka** or **Confluent Platform** home directory.
 It is also assumed, that Zookeeper, Brokers, Connect Workers and Schema Registry operate on standard ports. Adjust when necessary.
+
+## Table of contents
+
+- [Kafka Cluster Management](#Kafka-Cluster-Management)
+- [Kafka Topics](#Kafka-Topics)
+- [Kafka Consumers](#Kafka-Consumers)
+- [Kafka Producers](#Kafka-Producers)
+- [kafkacat](#kafkacat)
+- [Kafka Connect](#Kafka-Connect)
+- [Schema Registry](#Schema-Registry)
 
 ## Kafka Cluster Management
 
