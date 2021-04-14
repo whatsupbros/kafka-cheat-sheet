@@ -31,87 +31,114 @@ export LOG_DIR=/tmp
 
 ### Starting Kafka Cluster
 
-Start Zookeeper: 
-`./bin/zookeeper-server-start ./path/to/zookeeper.properties > ./output/zookeeper.out &`
+Start Zookeeper:
+```
+./bin/zookeeper-server-start ./path/to/zookeeper.properties > ./output/zookeeper.out &
+```
 
 Start Kafka Broker:
-`./bin/kafka-server-start ./path/to/broker0.properties > ./output/broker0.out &`
+```
+./bin/kafka-server-start ./path/to/broker0.properties > ./output/broker0.out &
+```
 
 Start Kafka Connect Worker (distributed mode):
-`./bin/connect-distributed ./path/to/worker0.properties > ./output/worker0.out &`
+```
+./bin/connect-distributed ./path/to/worker0.properties > ./output/worker0.out &
+```
 
 Start Schema Registry:
-`./bin/schema-registry-start ./path/to/schema-registry.properties > ./output/schema-registry.out &`
+```
+./bin/schema-registry-start ./path/to/schema-registry.properties > ./output/schema-registry.out &
+```
 
 Start kSQL Server:
-`./bin/ksql-server-start ./path/to/ksql-server.properties > ./output/ksql-server.out &`
+```
+./bin/ksql-server-start ./path/to/ksql-server.properties > ./output/ksql-server.out &
+```
 
 > Note: Standard output of Kafka Cluster processes will be saved in the specified files in this case. It also can be configured in `log4j.properties` which logs should be written and where by each process.
 
 ### Stopping Kafka Cluster
+
+> Note: This command searches for PIDs of all Kafka processes, and stops them gracefully.
 
 ```bash
 #!/bin/bash
 jps -m | grep 'QuorumPeerMain\|Kafka\|ConnectDistributed\|SchemaRegistryMain\|KsqlServerMain' | awk '{print $1}' | xargs kill
 ```
 
-> Note: This command searcher for PIDs of all Kafka processes, and stops them gracefully.
-
 ## Kafka Topics
 
 ### List topics
 
-`./bin/kafka-topics --zookeeper localhost:2181 --list`
-
+```
+./bin/kafka-topics --zookeeper localhost:2181 --list
+```
 ..or..
-
-`./bin/kafka-topics --bootstrap-server localhost:9092 --list`
+```
+./bin/kafka-topics --bootstrap-server localhost:9092 --list
+```
 
 ### Describe a topic
 
-`./bin/kafka-topics --zookeeper localhost:2181 --describe --topic my-topic`
-
+```
+./bin/kafka-topics --zookeeper localhost:2181 --describe --topic my-topic
+```
 ..or..
-
-`./bin/kafka-topics --bootstrap-server localhost:9092 --describe --topic my-topic`
+```
+./bin/kafka-topics --bootstrap-server localhost:9092 --describe --topic my-topic
+```
 
 ### Create a topic
 
-`./bin/kafka-topics --create --bootstrap-server localhost:9092 --topic my-topic --replication-factor 3 --partitions 3 --config cleanup.policy=compact`
+> Note: To read more about topic configuration options, refer to [official docs](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html)
 
-> Note: To read more about topic configuration options, refer to [official doc](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html)
+```
+./bin/kafka-topics --create --bootstrap-server localhost:9092 --topic my-topic --replication-factor 3 --partitions 3 --config cleanup.policy=compact
+```
 
 ### Alter topic config
 
-`./bin/kafka-configs --bootstrap-server localhost:9092 --topic my-topic --alter --add-config 'cleanup.policy=compact,retention.ms=86400000,segment.bytes=1073741824'`
-
+```
+./bin/kafka-configs --bootstrap-server localhost:9092 --topic my-topic --alter --add-config 'cleanup.policy=compact,retention.ms=86400000,segment.bytes=1073741824'
+```
 ..or..
+```
+# deprecated
+./bin/kafka-topics --zookeeper localhost:2181 --topic my-topic --alter --config cleanup.policy=compact --config retention.ms=86400000 --config segment.bytes=1073741824
+```
 
-`./bin/kafka-topics --zookeeper localhost:2181 --topic my-topic --alter --config cleanup.policy=compact --config retention.ms=86400000 --config segment.bytes=1073741824` (deprecated)
 
 > Note: Usage of `kafka-topics` command to alter topics configuration is deprecated, usage of `kafka-configs` command is recommended.
 
 ### Delete topic config (reset to default)
 
-`./bin/kafka-configs --bootstrap-server localhost:9092 --topic my-topic --alter --delete-config 'cleanup.policy,retention.ms'`
+```
+./bin/kafka-configs --bootstrap-server localhost:9092 --topic my-topic --alter --delete-config 'cleanup.policy,retention.ms'
+```
 
 ### Purge a topic
 
-`./bin/kafka-configs --bootstrap-server localhost:9092 --topic my-topic --alter --add-config 'cleanup.policy=delete,retention.ms=100'`
-
+```
+./bin/kafka-configs --bootstrap-server localhost:9092 --topic my-topic --alter --add-config 'cleanup.policy=delete,retention.ms=100'
+```
 ...wait a minute...
-
-`./bin/kafka-configs --bootstrap-server localhost:9092 --topic my-topic --alter --delete-config 'cleanup.policy,retention.ms'`
+```
+./bin/kafka-configs --bootstrap-server localhost:9092 --topic my-topic --alter --delete-config 'cleanup.policy,retention.ms'
+```
 
 ### Delete a topic
 
-`./bin/kafka-topics --bootstrap-server localhost:9092 --delete --topic my-topic`
+```
+./bin/kafka-topics --bootstrap-server localhost:9092 --delete --topic my-topic
+```
 
 ## Kafka Consumers
 
 ### Simple consumer console
 
 `./bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic my-topic --from-beginning` (plain text)
+
 `./bin/kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic my-topic --property schema.registry.url=http://localhost:8081 --from-beginning` (AVRO)
 
 ### Print key together with value
@@ -219,6 +246,7 @@ export SCHEMA_REGISTRY_OPTS="-Djavax.net.ssl.keyStore=$KAFKA_KEYSTORE_LOCATION -
 ### Simple producer console
 
 `./bin/kafka-console-producer --bootstrap-server localhost:9092 --topic my-topic` (plain text)
+
 `./bin/kafka-avro-console-producer --bootstrap-server localhost:9092 --topic my-topic --property schema.registry.url=http://localhost:8081 --property value.schema='<VALUE_SCHEMA>'` (Avro)
 
 ### Parse key together with value
@@ -332,55 +360,81 @@ For more info see [official doc](https://docs.confluent.io/platform/current/conn
 
 ### List installed Kafka Connect plugins
 
-`curl -Ss -X GET http://localhost:8083/connector-plugins | jq`
+```
+curl -Ss -X GET http://localhost:8083/connector-plugins | jq
+```
 
 ### List the connectors
 
-`curl -Ss -X GET http://localhost:8083/connectors | jq`
+```
+curl -Ss -X GET http://localhost:8083/connectors | jq
+```
 
 ### Deploy a connector
 
-`curl -Ss -X POST -H "Content-Type: application/json" --data @./path/to/my-topic-connector-config.json http://localhost:8083/connectors | jq`
+```
+curl -Ss -X POST -H "Content-Type: application/json" --data @./path/to/my-topic-connector-config.json http://localhost:8083/connectors | jq
+```
 
 ### Get connector overview (configuration and tasks overview)
 
-`curl -Ss -X GET http://localhost:8083/connectors/<connector-name> | jq`
+```
+curl -Ss -X GET http://localhost:8083/connectors/<connector-name> | jq
+```
 
 ### Get connector config
 
-`curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/config | jq`
+```
+curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/config | jq
+```
 
 ### Get connector status
 
-`curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/status | jq`
+```
+curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/status | jq
+```
 
 ### Restart connector
 
-`curl -Ss -X POST http://localhost:8083/connectors/<connector-name>/restart | jq`
+```
+curl -Ss -X POST http://localhost:8083/connectors/<connector-name>/restart | jq
+```
 
 ### Get connector tasks
 
-`curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/tasks | jq`
+```
+curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/tasks | jq
+```
 
 ### Get connector task status
 
-`curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/tasks/0/status | jq`
+```
+curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/tasks/0/status | jq
+```
 
 ### Restart connector task
 
-`curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/tasks/0/restart | jq`
+```
+curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/tasks/0/restart | jq
+```
 
 ### Remove connector
 
-`curl -Ss -X DELETE http://localhost:8083/connectors/<connector-name>/restart | jq`
+```
+curl -Ss -X DELETE http://localhost:8083/connectors/<connector-name>/restart | jq
+```
 
 ### Get current logging levels
 
-`curl -Ss http://localhost:8083/admin/loggers | jq`
+```
+curl -Ss http://localhost:8083/admin/loggers | jq
+```
 
 ### Set logging level for a particular logger
 
-`curl -Ss -X PUT -H "Content-Type:application/json" http://localhost:8083/admin/loggers/<logger-name> -d '{"level": "DEBUG"}' | jq`
+```
+curl -Ss -X PUT -H "Content-Type:application/json" http://localhost:8083/admin/loggers/<logger-name> -d '{"level": "DEBUG"}' | jq
+```
 
 **Examples:**
 
@@ -399,20 +453,26 @@ curl -Ss -X PUT -H "Content-Type:application/json" http://localhost:8083/admin/l
 
 ### Retrieve currently registered schemas (subjects)
 
-`curl -Ss -X GET http://localhost:8081/subjects | jq`
+```
+curl -Ss -X GET http://localhost:8081/subjects | jq
+```
 
 ### Retrieve schema versions for a subject
 
-`curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions | jq`
+```
+curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions | jq
+```
 
 ### Retrieve schema of a subject of a particular version
 
 `curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/1 | jq` (with metadata)
+
 `curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/1/schema | jq` (no metadata)
 
 ### Retrieve last schema of a subject
 
 `curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/latest | jq` (with metadata)
+
 `curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/latest/schema | jq` (no metadata)
 
 ### Retrieve last schema of a subject, use certificate for the connection to Schema Registry
@@ -432,12 +492,16 @@ curl -Ss --cert $KEY_LOCATION:$KEY_PASSPHRASE \
 
 > Note: Schema saved using this command, is suitable for `value.schema.file` property of `kafka-avro-console-producer` utility
 
-`curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/latest/schema > ./my-topic-value-schema.json`
+```
+curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/latest/schema > ./my-topic-value-schema.json
+```
 
 ### Deploy schema for a subject
 
-`curl -Ss -X POST -H "Content-Type: application/json" --data @./my-topic-value-schema.json http://localhost:8081/subjects/my-topic-value/versions | jq`
-
 > Note: Schema is read from `my-topic-value-schema.json` file from the current directory. Mind the fact, that schema format must look as: `{"schema":"{\"type\":\"string\"}"}`. This means, there must not be any spaces or indentations, and the double quote characters must be escaped with `\` symbol within schema value.
+
+```
+curl -Ss -X POST -H "Content-Type: application/json" --data @./my-topic-value-schema.json http://localhost:8081/subjects/my-topic-value/versions | jq
+```
 
 
