@@ -137,9 +137,15 @@ jps -m | grep 'QuorumPeerMain\|Kafka\|ConnectDistributed\|SchemaRegistryMain\|Ks
 
 ### Simple consumer console
 
-`./bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic my-topic --from-beginning` (plain text)
+Plain text:
+```
+./bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic my-topic --from-beginning
+```
 
-`./bin/kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic my-topic --property schema.registry.url=http://localhost:8081 --from-beginning` (AVRO)
+Avro:
+```
+./bin/kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic my-topic --property schema.registry.url=http://localhost:8081 --from-beginning
+```
 
 ### Print key together with value
 
@@ -245,17 +251,25 @@ export SCHEMA_REGISTRY_OPTS="-Djavax.net.ssl.keyStore=$KAFKA_KEYSTORE_LOCATION -
 
 ### Simple producer console
 
-`./bin/kafka-console-producer --bootstrap-server localhost:9092 --topic my-topic` (plain text)
+Plain text:
+```
+./bin/kafka-console-producer --bootstrap-server localhost:9092 --topic my-topic
+```
 
-`./bin/kafka-avro-console-producer --bootstrap-server localhost:9092 --topic my-topic --property schema.registry.url=http://localhost:8081 --property value.schema='<VALUE_SCHEMA>'` (Avro)
+Avro:
+```
+./bin/kafka-avro-console-producer --bootstrap-server localhost:9092 --topic my-topic --property schema.registry.url=http://localhost:8081 --property value.schema='<value-schema-as-json>'
+```
 
 ### Parse key together with value
 
+> Note: Topic value schema is read from the file `/path/to/my-topic-value-schema.json`, where schema must be formatted as normal minified JSON (no extra spaces and other whitespace characters).
+
 ```bash
-../bin/kafka-avro-console-producer --bootstrap-server localhost:9092 \
+./bin/kafka-avro-console-producer --bootstrap-server localhost:9092 \
 --topic my-topic \
 --property schema.registry.url=http://localhost:8081 \
---property value.schema.file=./path/to/my-topic-value-schema.json \
+--property value.schema.file=/path/to/my-topic-value-schema.json \
 --property parse.key=true \
 --property key.separator=":"
 ```
@@ -263,10 +277,10 @@ export SCHEMA_REGISTRY_OPTS="-Djavax.net.ssl.keyStore=$KAFKA_KEYSTORE_LOCATION -
 ### Use different serializer for key
 
 ```bash
-../bin/kafka-avro-console-producer --bootstrap-server localhost:9092 \
+./bin/kafka-avro-console-producer --bootstrap-server localhost:9092 \
 --topic my-topic \
 --property schema.registry.url=http://localhost:8081 \
---property value.schema.file=./path/to/my-topic-value-schema.json \
+--property value.schema.file=/path/to/my-topic-value-schema.json \
 --property parse.key=true \
 --property key.separator=":" \
 --property key.serializer="org.apache.kafka.common.serialization.StringSerializer" 
@@ -275,10 +289,10 @@ export SCHEMA_REGISTRY_OPTS="-Djavax.net.ssl.keyStore=$KAFKA_KEYSTORE_LOCATION -
 ### Read messages to produce from a file
 
 ```bash
-../bin/kafka-avro-console-producer --bootstrap-server localhost:9092 \
+./bin/kafka-avro-console-producer --bootstrap-server localhost:9092 \
 --topic my-topic \
 --property schema.registry.url=http://localhost:8081 \
---property value.schema.file=./path/to/my-topic-value-schema.json \
+--property value.schema.file=/path/to/my-topic-value-schema.json \
 --property parse.key=true \
 --property key.separator=":" \
 --property key.serializer="org.apache.kafka.common.serialization.StringSerializer" \
@@ -373,7 +387,7 @@ curl -Ss -X GET http://localhost:8083/connectors | jq
 ### Deploy a connector
 
 ```
-curl -Ss -X POST -H "Content-Type: application/json" --data @./path/to/my-topic-connector-config.json http://localhost:8083/connectors | jq
+curl -Ss -X POST -H "Content-Type: application/json" --data @/path/to/my-topic-connector-config.json http://localhost:8083/connectors | jq
 ```
 
 ### Get connector overview (configuration and tasks overview)
@@ -465,15 +479,27 @@ curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions | jq
 
 ### Retrieve schema of a subject of a particular version
 
-`curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/1 | jq` (with metadata)
+With metadata (schema ID, version, schema value as escaped JSON):
+```
+curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/1 | jq
+```
 
-`curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/1/schema | jq` (no metadata)
+Without metadata (schema value as normal JSON):
+```
+curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/1/schema | jq
+```
 
 ### Retrieve last schema of a subject
 
-`curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/latest | jq` (with metadata)
+With metadata (schema ID, version, schema value as escaped JSON):
+```
+curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/latest | jq
+```
 
-`curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/latest/schema | jq` (no metadata)
+Without metadata (schema value as normal JSON):
+```
+curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/latest/schema | jq
+```
 
 ### Retrieve last schema of a subject, use certificate for the connection to Schema Registry
 
@@ -498,10 +524,10 @@ curl -Ss -X GET http://localhost:8081/subjects/my-topic-value/versions/latest/sc
 
 ### Deploy schema for a subject
 
-> Note: Schema is read from `my-topic-value-schema.json` file from the current directory. Mind the fact, that schema format must look as: `{"schema":"{\"type\":\"string\"}"}`. This means, there must not be any spaces or indentations, and the double quote characters must be escaped with `\` symbol within schema value.
+> Note: Schema is read from `my-topic-value-schema.json` file from the current directory. Mind the fact, that schema value format must be formatted as mimified escaped JSON, i.e.: `{"schema":"{\"type\":\"string\"}"}`.
 
 ```
-curl -Ss -X POST -H "Content-Type: application/json" --data @./my-topic-value-schema.json http://localhost:8081/subjects/my-topic-value/versions | jq
+curl -Ss -X POST -H "Content-Type: application/json" --data @/path/to/my-topic-value-schema.json http://localhost:8081/subjects/my-topic-value/versions | jq
 ```
 
 
