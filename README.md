@@ -286,7 +286,7 @@ Avro:
 --property key.serializer="org.apache.kafka.common.serialization.StringSerializer" 
 ```
 
-### Read messages to produce from a file
+### Read Kafka messages to produce from a file
 
 ```bash
 ./bin/kafka-avro-console-producer --bootstrap-server localhost:9092 \
@@ -303,7 +303,7 @@ Avro:
 
 > Note: `kafkacat` is a powerful tool to work with Kafka Cluster written in C. It can operate in both consumer and producer mode, it is fast, it can read topic headers, but it currently does not support all Kafka features (i.e. there is no producer mode for AVRO serialized topics).
 
-### kafkacat for Windows
+### `kafkacat` for Windows
 
 To build `kafkacat` for Windows from sources, you will need to build it from `win32` directory and have these pre-requisites:
 1. NuGet package manager (https://www.nuget.org/downloads)
@@ -329,10 +329,11 @@ Version 1.6.0 (Transactions, librdkafka 1.5.0 builtin.features=gzip,snappy,ssl,s
 
 > Note: Currently, the Windows version of `kafkacat` does not support JSON, Avro and Schema Registry
 
-### kafkacat for Linux
+### `kafkacat` for Linux
 
 #### Option 1. Install from repository
 
+Ubuntu/Debian example:
 ```bash
 sudo apt install kafkacat
 ```
