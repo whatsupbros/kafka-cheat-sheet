@@ -241,7 +241,7 @@ export SCHEMA_REGISTRY_OPTS="-Djavax.net.ssl.keyStore=$KAFKA_KEYSTORE_LOCATION -
 --property schema.registry.url=http://localhost:8081 \
 --from-beginning
 --timeout-ms 25000 \
-> ./my-topic-dump.json
+> ./my-topic-data.json
 ```
 
 > Note: After consuming all topic messages, the console waits for 25 seconds timeout without new messages, and then exits
@@ -300,7 +300,7 @@ Avro:
 
 ## [kafkacat](https://github.com/edenhill/kafkacat)
 
-> Note: `kafkacat` is a powerful tool to work with Kafka Cluster written in C. It can operate in both consumer and producer mode, it is fast, it can read topic headers, but it currently does not support all Kafka features (i.e. there is no producer mode for AVRO serialized topics).
+> Note: `kafkacat` is a powerful tool to work with Kafka Cluster written in C. It can operate in both consumer and producer mode, it is fast, it can read topic headers, but it currently does not support all Kafka features (i.e. there is no producer mode for Avro serialized topics).
 
 ### `kafkacat` for Windows
 
