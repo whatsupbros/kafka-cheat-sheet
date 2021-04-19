@@ -392,8 +392,6 @@ See `kafkcat` usage examples here: https://github.com/edenhill/kafkacat#examples
 > - Connectors configuration options: https://docs.confluent.io/platform/current/installation/configuration/connect/index.html
 > - Kafka Connect REST API Reference: https://docs.confluent.io/platform/current/connect/references/restapi.html
 
-For more info see [official doc](https://docs.confluent.io/platform/current/connect/references/restapi.html).
-
 ### List installed Kafka Connect plugins
 
 ```
