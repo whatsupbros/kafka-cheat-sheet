@@ -388,9 +388,8 @@ See `kafkcat` usage examples here: https://github.com/edenhill/kafkacat#examples
 > Note: For Kafka Connect and Schema Registry you will need `curl` and `jq` utilities to make requests to their APIs.
 
 > See also:
-> - Common configuration options: https://docs.confluent.io/platform/current/installation/configuration/connect/index.html
-> - Source configuration options: https://docs.confluent.io/platform/current/installation/configuration/connect/source-connect-configs.html
-> - Sink configuration options: https://docs.confluent.io/platform/current/installation/configuration/connect/sink-connect-configs.html
+> - Workers configuration options: https://docs.confluent.io/platform/current/connect/references/allconfigs.html
+> - Connectors configuration options: https://docs.confluent.io/platform/current/installation/configuration/connect/index.html
 > - Kafka Connect REST API Reference: https://docs.confluent.io/platform/current/connect/references/restapi.html
 
 For more info see [official doc](https://docs.confluent.io/platform/current/connect/references/restapi.html).
