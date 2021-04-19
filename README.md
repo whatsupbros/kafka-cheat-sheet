@@ -23,8 +23,9 @@ It is also assumed, that Zookeeper, Brokers, Connect Workers and Schema Registry
 ### Environment setup
 
 > See also: 
-> - https://docs.confluent.io/platform/current/zookeeper/deployment.html#configuration-options
-> - https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html
+> - ZooKeeper configuration options: https://docs.confluent.io/platform/current/zookeeper/deployment.html#configuration-options
+> - Brokers configuration options: https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html
+> - REST Proxy v3 for cluster management: https://docs.confluent.io/platform/current/kafka-rest/api.html#crest-api-v3
 
 ```bash
 export KAFKA_HEAP_OPTS="-Xmx2G -Xms128M"
@@ -73,7 +74,9 @@ jps -m | grep 'QuorumPeerMain\|Kafka\|ConnectDistributed\|SchemaRegistryMain\|Ks
 
 ## Kafka Topics
 
-> See also: https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html
+> See also: 
+> - https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html
+> - REST Proxy v3 for topics management: https://docs.confluent.io/platform/current/kafka-rest/api.html#create-a-topic
 
 ### List topics
 
@@ -385,9 +388,10 @@ See `kafkcat` usage examples here: https://github.com/edenhill/kafkacat#examples
 > Note: For Kafka Connect and Schema Registry you will need `curl` and `jq` utilities to make requests to their APIs.
 
 > See also:
-> - https://docs.confluent.io/platform/current/installation/configuration/connect/index.html
-> - https://docs.confluent.io/platform/current/installation/configuration/connect/sink-connect-configs.html
-> - https://docs.confluent.io/platform/current/installation/configuration/connect/source-connect-configs.html
+> - Common configuration options: https://docs.confluent.io/platform/current/installation/configuration/connect/index.html
+> - Source configuration options: https://docs.confluent.io/platform/current/installation/configuration/connect/source-connect-configs.html
+> - Sink configuration options: https://docs.confluent.io/platform/current/installation/configuration/connect/sink-connect-configs.html
+> - Kafka Connect REST API Reference: https://docs.confluent.io/platform/current/connect/references/restapi.html
 
 For more info see [official doc](https://docs.confluent.io/platform/current/connect/references/restapi.html).
 
@@ -483,6 +487,10 @@ curl -Ss -X PUT -H "Content-Type:application/json" http://localhost:8083/admin/l
 ```
 
 ## Schema Registry
+
+> See also:
+> - Schema Registry REST API Reference: https://docs.confluent.io/platform/current/schema-registry/develop/api.html
+> - REST API Usage Examples: https://docs.confluent.io/platform/current/schema-registry/develop/using.html#common-sr-api-usage-examples
 
 ### Retrieve currently registered schemas (subjects)
 
