@@ -22,6 +22,10 @@ It is also assumed, that Zookeeper, Brokers, Connect Workers and Schema Registry
 
 ### Environment setup
 
+> See also: 
+> - https://docs.confluent.io/platform/current/zookeeper/deployment.html#configuration-options
+> - https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html
+
 ```bash
 export KAFKA_HEAP_OPTS="-Xmx2G -Xms128M"
 export CONFLUENT_HOME="/path/to/confluent-X.X.X"
@@ -68,6 +72,8 @@ jps -m | grep 'QuorumPeerMain\|Kafka\|ConnectDistributed\|SchemaRegistryMain\|Ks
 ```
 
 ## Kafka Topics
+
+> See also: https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html
 
 ### List topics
 
@@ -134,6 +140,10 @@ jps -m | grep 'QuorumPeerMain\|Kafka\|ConnectDistributed\|SchemaRegistryMain\|Ks
 ```
 
 ## Kafka Consumers
+
+> See also: 
+> - https://docs.confluent.io/platform/current/tutorials/examples/clients/docs/kafka-commands.html#basic-producer-and-consumer
+> - https://docs.confluent.io/platform/current/installation/configuration/consumer-configs.html
 
 ### Simple consumer console
 
@@ -247,6 +257,10 @@ export SCHEMA_REGISTRY_OPTS="-Djavax.net.ssl.keyStore=$KAFKA_KEYSTORE_LOCATION -
 > Note: After consuming all topic messages, the console waits for 25 seconds timeout without new messages, and then exits
 
 ## Kafka Producers
+
+> See also: 
+> - https://docs.confluent.io/platform/current/tutorials/examples/clients/docs/kafka-commands.html#basic-producer-and-consumer
+> - https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html
 
 ### Simple producer console
 
@@ -369,6 +383,11 @@ See `kafkcat` usage examples here: https://github.com/edenhill/kafkacat#examples
 ## Kafka Connect
 
 > Note: For Kafka Connect and Schema Registry you will need `curl` and `jq` utilities to make requests to their APIs.
+
+> See also:
+> - https://docs.confluent.io/platform/current/installation/configuration/connect/index.html
+> - https://docs.confluent.io/platform/current/installation/configuration/connect/sink-connect-configs.html
+> - https://docs.confluent.io/platform/current/installation/configuration/connect/source-connect-configs.html
 
 For more info see [official doc](https://docs.confluent.io/platform/current/connect/references/restapi.html).
 
