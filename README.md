@@ -20,12 +20,12 @@ It is also assumed, that Zookeeper, Brokers, Connect Workers and Schema Registry
 
 ## Kafka Cluster Management
 
-### Environment setup
-
 > See also: 
 > - ZooKeeper configuration options: https://docs.confluent.io/platform/current/zookeeper/deployment.html#configuration-options
 > - Brokers configuration options: https://docs.confluent.io/platform/current/installation/configuration/broker-configs.html
 > - REST Proxy v3 for cluster management: https://docs.confluent.io/platform/current/kafka-rest/api.html#crest-api-v3
+
+### Environment setup
 
 ```bash
 export KAFKA_HEAP_OPTS="-Xmx2G -Xms128M"
@@ -455,7 +455,7 @@ curl -Ss -X POST http://localhost:8083/connectors/<connector-name>/tasks/0/resta
 ### Remove connector
 
 ```
-curl -Ss -X DELETE http://localhost:8083/connectors/<connector-name>/restart | jq
+curl -Ss -X DELETE http://localhost:8083/connectors/<connector-name> | jq
 ```
 
 ### Get current logging levels
