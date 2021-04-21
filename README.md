@@ -449,7 +449,7 @@ curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/tasks/0/status
 ### Restart connector task
 
 ```
-curl -Ss -X GET http://localhost:8083/connectors/<connector-name>/tasks/0/restart | jq
+curl -Ss -X POST http://localhost:8083/connectors/<connector-name>/tasks/0/restart | jq
 ```
 
 ### Remove connector
