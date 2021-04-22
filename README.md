@@ -1,6 +1,6 @@
 # Kafka Cheat Sheet
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?&style=for-the-badge)](https://opensource.org/licenses/Apache-2.0) [<img alt="LinkedIn" src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/>](https://www.linkedin.com/in/denissavenko/) [<img alt="Blog" src="https://img.shields.io/badge/blog-black.svg?&style=for-the-badge&logo=ghost&logoColor=white"/>](https://dsavenko.me/)
+[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](https://opensource.org/licenses/Apache-2.0) [<img alt="LinkedIn" src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?logo=linkedin&logoColor=white"/>](https://www.linkedin.com/in/denissavenko/) [<img alt="Blog" src="https://img.shields.io/badge/blog-black.svg?logo=ghost&logoColor=white"/>](https://dsavenko.me/)
 
 This is a list of commonly used CLI examples, when you work with **Kafka**, **Kafka Connect** and **Schema Registry**.
 Feel free to use it as well as post extensions to it.
