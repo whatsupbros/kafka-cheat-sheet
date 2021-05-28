@@ -381,7 +381,7 @@ Version 1.6.0 (JSON, Avro, Transactions, librdkafka 1.5.0 builtin.features=gzip,
 
 ### kafkacat examples
 
-See `kafkcat` usage examples here: https://github.com/edenhill/kafkacat#examples
+See `kafkacat` usage examples here: https://github.com/edenhill/kafkacat#examples
 
 ## Kafka Connect
 
