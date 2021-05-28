@@ -387,6 +387,8 @@ See `kafkcat` usage examples here: https://github.com/edenhill/kafkacat#examples
 
 > Note: For Kafka Connect and Schema Registry you will need `curl` and `jq` utilities to make requests to their APIs.
 
+> Note: Alternatively, you can use [this `postman` workspace](https://www.postman.com/whatsupbros/workspace/03c475b6-174a-40f4-8111-f09d13082d23) to work with Kafka Connect and Schema Registry REST APIs
+
 > See also:
 > - Workers configuration options: https://docs.confluent.io/platform/current/connect/references/allconfigs.html
 > - Connectors configuration options: https://docs.confluent.io/platform/current/installation/configuration/connect/index.html
